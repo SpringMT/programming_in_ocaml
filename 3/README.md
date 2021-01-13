@@ -217,13 +217,94 @@ let rec interpow(x, n, res) =
 ### 3-11
 
 ```
-(* 目的 : 2つの自然数 m と nの最大公約数を求める *)
+(* 目的：m > n > 0 なる自然数 m と n の最大公約数を求める *) 
 (* gcd : int -> int -> int *)
 
 (* 自明なケース n = 0ならばmが最大公約数 *)
 (* 再帰停止性 : nと mをnで割った余り の最大公約数が答え  n の値が小さくなっているので、いずれ 0 になり停止する*)
-let gcd m n =
-  
+let rec gcd m n =
+  if n = 0 then
+   m
+  else
+   gcd n (m mod n)
+   ;;
+let test1 = gcd 7 5 = 1;;
+let test2 = gcd 30 18 = 6;; 
+let test3 = gcd 36 24 = 12;;
 ```
 
-### 3-10
+https://ymotongpoo.hatenablog.com/entry/20100321/1269182979
+
+```
+(* 0 <= m < n *)
+
+let rec comb m n =
+ if m = 0 || m = n then
+  1
+ else
+  (comb m (n-1)) + (comb (m-1) (n-1))
+  ;;
+
+let tes1 = comb 3 5 = 10;;
+```
+
+```
+let rec iterfib n x y =
+  if n = 1 then
+    y
+  else
+    iterfib (n-1) y (x+y)
+    ;;
+let test1 = iterfib 8 0 1 = 21;;
+```
+
+```
+let rec fib n = (* n 番目のフィボナッチ数 *)
+    if n = 1 || n = 2 then 1 else fib(n - 1) + fib(n - 2);;
+
+let fib n =
+ let rec fib_pair n =
+  if n = 1 then (1,0)
+  else
+   let (i, j) = fib_pair(n - 1) in
+     (i + j, i)
+ in
+   let (i, _) = fib_pair n in
+     i
+     ;;
+#trace fib;;
+fib 8;;
+#untrace fib;;
+```
+
+```
+let max_ascii str =
+  let rec max_char i char =
+    if i = 0 then
+      char
+    else
+      let current = str.[i] in
+       if current > char then
+         max_char (i - 1) current
+       else
+         max_char (i - 1) char
+  in
+    let n = String.length str in
+    max_char (n-1) str.[n-1]
+    ;;
+let test1 = max_ascii "abcde" = 'e';;
+```
+
+### 3-12
+
+```
+let rec pos n =
+    neg (n-1) +. 1.0 /. (float_of_int (4 * n + 1))
+  and neg n =
+    if n < 0 then 0.0
+    else pos n -. 1.0 /. (float_of_int (4 * n + 3));;
+
+```
+
+
+### 
