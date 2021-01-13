@@ -1,5 +1,21 @@
 ## 章
 
+```
+let fib n =
+ let rec fib_pair n =
+  if n = 1 then (1,0)
+  else
+   let (i, j) = fib_pair(n - 1) in
+     (i + j, i)
+ in
+   let (i, _) = fib_pair n in
+     i
+     ;;
+#trace fib;;
+fib 8;;
+#untrace fib;;
+```
+
 
 ## 練習問題
 * 参照
@@ -134,3 +150,80 @@ val y : int = 4
 - : int = 4
 
 ```
+
+### 3-6
+```
+let geo_mean (x, y) =
+  sqrt(x *. y);;
+4.0 = geo_mean (1., 16.);;
+```
+```
+let bmi (name, sintyo, taiju) =
+  let bmi_score = taiju /. (sintyo ** 2.) in
+    if bmi_score < 18.5 then
+      name ^ "さんはやせています"
+    else if bmi_score >= 18.5 && bmi_score < 25.0 then
+      name ^ "さんは標準です"
+    else if bmi_score >= 25.0 && bmi_score < 30.0 then
+      name ^ "さんは肥満です"
+    else
+      name ^ "さんは高度肥満です"
+      ;;
+
+"hogeさんはやせています" = bmi ("hoge", 170.0, 50.0);;
+```
+
+```
+let sum_and_diff (x, y) = 
+  (x + y, x - y);;
+let f (a, b) =
+  ((a + b) / 2, (a - b) / 2);;
+(2,4) = f(sum_and_diff(2,4));;
+```
+
+### 3-7
+```
+let rec pow (x, n) =
+  if n = 0 then
+    1
+  else
+    x * pow(x, n-1)
+    ;;
+16 = pow (2, 4);;
+
+let rec pow2 (x, n) = match n with
+  0 -> 1
+  | 1 -> x
+  | n when n mod 2 = 0 -> 
+    let res = pow2(x, n /2) in 
+      res * res
+  | _ -> let res = pow2(x, n /2) in
+    res * res * x
+    ;;
+  16 = pow2 (2, 4);;
+```
+
+### 3-8
+```
+let rec interpow(x, n, res) =
+ if n = 0 then
+   res
+ else
+  interpow(x, n - 1, res * x)
+  ;;
+16 = interpow(2, 4, 1);;
+````
+
+### 3-11
+
+```
+(* 目的 : 2つの自然数 m と nの最大公約数を求める *)
+(* gcd : int -> int -> int *)
+
+(* 自明なケース n = 0ならばmが最大公約数 *)
+(* 再帰停止性 : nと mをnで割った余り の最大公約数が答え  n の値が小さくなっているので、いずれ 0 になり停止する*)
+let gcd m n =
+  
+```
+
+### 3-10
