@@ -95,5 +95,32 @@ true = answer_or false true;;
 
 ### 3-4
 ```
+let x = 1 in let x = 3 in let x = x + 2 in x * x;;
+                                  x = 3    x = 5
+25
+let x = 2 and y = 3 in (let y = x and x = y + 2 in x * y) + y;;
+                                                  y = 2  x = 5
+13
+let x = 2 in let y = 3 in let y = x in let z = y + 2 in x * y * z;;
+                              y =2         z = 4        2 * 2 * 4
+16
 
+# let x = 1 in let x = 3 in let x = x + 2 in x * x;;
+Warning 26: unused variable x.
+- : int = 25
+# let x = 2 and y = 3 in (let y = x and x = y + 2 in x * y) + y;;
+- : int = 13
+# let x = 2 in let y = 3 in let y = x in let z = y + 2 in x * y * z;;
+Warning 26: unused variable y.
+- : int = 16
+```
+### 3-5
+
+```
+let x = e1 and y = e2;;
+xがe1 yがe2としてトップレベルに束縛される
+let x = e1 let y = e2;;
+xはe1としてトップレベルに束縛される
+yはxのスコープ無いとして束縛される
+=> あれ、
 ```
