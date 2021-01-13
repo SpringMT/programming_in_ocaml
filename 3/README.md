@@ -59,4 +59,41 @@ let capitalize c =
 'B' = capitalize 'B';;
 '1' = capitalize '1';;
 ```
+### 3-2
 
+```
+(* if b1 then *)
+if b1 = true then
+  b2
+else
+  false;;
+```
+
+```
+if b1 = true then
+  true
+else
+  b2;;
+```
+
+### 3-3
+```
+let answer_and b1 b2 =
+  if not (not b1 || not b2) then true else false;;
+true = answer_and true true;;
+false = answer_and false false;;
+false = answer_and true false;;
+false = answer_and false true;;
+
+let answer_or b1 b2 =
+  if not (not b1 && not b2) then true else false;;
+true = answer_or true true;;
+false = answer_or false false;;
+true = answer_or true false;;
+true = answer_or false true;;
+```
+
+### 3-4
+```
+
+```
