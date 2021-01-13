@@ -119,8 +119,18 @@ Warning 26: unused variable y.
 ```
 let x = e1 and y = e2;;
 xがe1 yがe2としてトップレベルに束縛される
+しかし、xの参照ができない
+# let x = 1 and y = x+3;;
+Error: Unbound value x
+
 let x = e1 let y = e2;;
 xはe1としてトップレベルに束縛される
-yはxのスコープ無いとして束縛される
-=> あれ、
+yはトップレベルとして参照できる、xが束縛された後に実行されるためxも参照可能
+# let x = 1 let y = x+3;;
+val x : int = 1
+val y : int = 4
+# y
+  ;;
+- : int = 4
+
 ```
