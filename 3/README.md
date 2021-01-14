@@ -306,5 +306,32 @@ let rec pos n =
 
 ```
 
+### 3-13
 
-### 
+```
+let rec pow (x, n) =
+  if n = 0 then
+    1
+  else
+    x * pow(x, n-1)
+    ;;
+
+let rec pow =
+  fun n x -> 
+    if n = 0 then
+      1
+    else
+      x * pow (n-1) x
+      ;;
+let test1 = pow 2 4 = 16;;
+
+let rec pow =
+  fun n x -> 
+    if n = 0 then
+      1
+    else
+      x * pow (n-1) x
+      ;;
+let cube = pow 3;;
+```
+
