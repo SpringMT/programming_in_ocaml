@@ -54,3 +54,59 @@ let rec partition pivot = function
         ;;
 let test4 = partition 7 [9; 1; 5; 4; 18] = ([1;5;4],[9;18;]);;
 ```
+
+## 練習問題
+### 5.2
+```
+let rec downto1 = function
+  0 -> []
+  | a -> a :: downto1 (a-1)
+  ;;
+```
+
+```
+let rec roman_repeat roman_str = function
+  0 -> ""
+  | n -> roman_str ^ roman_repeat roman_str (n - 1)
+  ;;
+
+let rec roman dict num =   
+  match dict with
+    [] -> ""
+    | (n, roman_str)::rest ->
+      let count = num / n
+        in
+          (roman_repeat roman_str count) ^ roman rest (num mod n)
+          ;;
+```
+
+```
+let rec nested_length = function
+  [] -> 0
+  | [] :: rest -> nested_length rest
+  | (_::rest1) :: rest2 -> 1 + nested_length(rest1::rest2)
+  ;;
+```
+
+```
+let rec concat = function
+  [] -> []
+  | [] :: rest -> concat rest
+  | (n::rest1) :: rest2 -> n :: concat(rest1::rest2)
+  ;;
+
+こういうのもある
+
+# let concat = List.fold_left (@) [];; 
+val concat : '_weak1 list list -> '_weak1 list = <fun>
+# concat [[0; 3; 4]; [2]; []; [5; 0]];;
+- : int list = [0; 3; 4; 2; 5; 0]
+# [0; 3; 4] @ [2];;
+- : int list = [0; 3; 4; 2]
+```
+
+```
+
+```
+
+
