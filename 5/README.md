@@ -106,7 +106,62 @@ val concat : '_weak1 list list -> '_weak1 list = <fun>
 ```
 
 ```
+let rec zip a b =
+  match (a, b) with
+    (_, []) | ([], _) -> []
+    | (a'::rest_a, b'::rest_b) -> (a', b') :: zip rest_a rest_b
+    ;;
+
+zip[2;3;4;5;6;7;8;9;10;11]
+        [true; true; false; true; false; true; false; false; false; true];;
+```
 
 ```
+let rec unzip lst =
+  match lst with
+    [] -> ([], [])
+    | (a, b) :: rest -> (a:: (fst (unzip rest)), b:: snd( (unzip rest)))
+    ;;
+unzip(zip[2;3;4;5;6;7;8;9;10;11]
+             [true; true; false; true; false; true;
+             false; false; false; true]);;
+```
+
+```
+let rec filter x lst =
+  match lst with
+    [] -> []
+    | (a :: rest) when x a -> a :: filter x rest
+    | a :: rest -> filter x rest
+    ;;
+    
+let is_positive x = (x > 0);;
+filter is_positive [-9; 0; 2; 5; -3];;
+
+filter (fun l -> length l = 3) [[1; 2; 3]; [4; 5]; [6; 7; 8]; [9]];;
+```
+
+```
+let rec take n lst =
+  match lst with
+  [] -> []
+  | (a::rest) when n > 0 -> a :: take (n-1) rest
+  | _ -> []
+  ;;
+
+let rec take n lst =
+  match (n, lst) with
+  (0, _) | (_, []) -> []
+  | (n, a::rest) -> a :: take (n-1) rest
+  ;;
+
+let drop
+
+
+let ten_to_zero = [10; 9; 8; 7; 6; 5; 4; 3; 2; 1];;
+take 8 ten_to_zero;;
+
+```
+
 
 
