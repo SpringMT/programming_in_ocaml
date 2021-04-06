@@ -145,9 +145,10 @@ filter (fun l -> length l = 3) [[1; 2; 3]; [4; 5]; [6; 7; 8]; [9]];;
 let rec take n lst =
   match lst with
   [] -> []
-  | (a::rest) when n > 0 -> a :: take (n-1) rest
+  | (a::rest) when n > 0 -> a :: (take [@tailcall]) (n-1) rest
   | _ -> []
   ;;
+#trace take;;
 
 let rec take n lst =
   match (n, lst) with
@@ -155,12 +156,30 @@ let rec take n lst =
   | (n, a::rest) -> a :: take (n-1) rest
   ;;
 
-let drop
-
+let rec drop n lst =
+  match (n, lst) with
+  (0, _) | (_, []) -> lst
+  | (n, a::rest) -> drop (n-1) rest
+  ;;
 
 let ten_to_zero = [10; 9; 8; 7; 6; 5; 4; 3; 2; 1];;
 take 8 ten_to_zero;;
+drop 7 ten_to_zero;;
+```
 
+```
+let max_list lst = 
+  let rec imax_list max lst =
+    match lst with
+      [] -> max
+      | (a :: rest) when a > max  -> imax_list a rest
+      | (a :: rest) -> imax_list max rest
+  in
+    match lst with
+    a :: rest -> (imax_list [@tailcall]) a rest
+    ;;
+#trace max_list;;
+max_list [7; 9; 0; -5];;
 ```
 
 
