@@ -178,8 +178,50 @@ let max_list lst =
     match lst with
     a :: rest -> (imax_list [@tailcall]) a rest
     ;;
-#trace max_list;;
+#trace max_list;;,
 max_list [7; 9; 0; -5];;
+```
+
+### 5.3
+https://www.ocaml.org/releases/4.01/htmlman/libref/Pervasives.html
+
+```
+let rec mem a s =
+  match s with
+  [] -> false
+  | (x::rest) when x = a -> true
+  | (x::rest) -> (mem[@tailcall]) a rest
+  ;;
+
+mem 3 [1;2;3;4;5];;
+mem 6 [1;2;3;4;5];;
+
+let rec intersect s1 s2 =
+  match s1 with
+  [] -> []
+  | (a::rest) when mem a s2 -> a:: ((intersect[@tailcall]) rest s2)
+  | (a::rest) -> (intersect[@tailcall]) rest s2
+    ;;
+intersect [1;3;5;7] [1;5;3;4;2];;    
+
+let union s1 s2 =
+  let rec i_union s res =
+    match s with
+    [] -> res
+    | (a::rest) when mem a res -> i_union rest res
+    | (a::rest) -> i_union rest (a::res)
+  in
+    i_union (s1 @ s2) []
+    ;;
+union [1;2;3;4;5] [1;3;5;6;7];;
+
+let rec diff s1 s2 =
+  match s1 with
+  [] -> []
+  | (a::rest) when mem a s2 -> diff rest s2
+  | (a::rest) -> a :: (diff rest s2)
+  ;;
+diff [2;1;3;4;5] [1;3;7];;
 ```
 
 
