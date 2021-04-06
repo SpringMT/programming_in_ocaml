@@ -224,5 +224,83 @@ let rec diff s1 s2 =
 diff [2;1;3;4;5] [1;3;7];;
 ```
 
+### 5.4
+```
+let rec map f = function
+  [] -> []
+  | x :: rest -> f x :: map f rest
+  ;;
 
+let f = (+) 1;;
+let g = ( * ) 2;;
+let l = [1;2;3;4;5];;
+map f (map g l);;
 
+map (fun a -> f( g a)) l;; 
+```
+
+### 5.5
+```
+let rec fold_right f l e = match l with
+[] -> e
+| x :: rest -> f x (fold_right f rest e)
+;;
+
+let concat n = fold_right (@) n [];;
+concat [[0; 3; 4]; [2]; []; [5; 0]];;
+
+let forall f x = fold_right (fun a -> (&&) (f a)) x true;;
+forall (fun x -> x >= 5) [9;20;5];;
+
+let exists f x = fold_right (fun a -> (||) (f a)) x false;;
+exists (fun x -> (x mod 7) = 0) [23; -98; 19; 53];;
+```
+
+```
+let rec quick_sort lst results =
+  match lst with 
+  [] -> results
+  | [a] -> a::results
+  | pivot :: rest ->
+      let rec partition left right lst results =
+        match lst with
+        [] -> quick_sort left  (pivot :: (quick_sort right results))
+        | y :: ys ->
+            if pivot < y then
+              partition left (y :: right) ys results
+            else
+              partition (y :: left) right ys results
+      in partition [] [] rest results;;
+```
+
+### 5.7
+
+```
+
+```
+
+### 5.8
+```
+let rec map f = function
+  [] -> []
+  | x :: rest -> f x :: map f rest
+  ;;
+  
+let map2 f n =
+  let rec i_map2 f n res =
+    match n with
+    [] -> res
+    | x :: rest -> (i_map2[@tailcall]) f rest (f(x)::res)
+  in i_map2 f n []
+  ;;
+
+let rec fold_left f e l =
+  match l with
+      [] -> e
+    | x :: rest -> fold_left f (f e x) rest;;
+
+let map2 f xs =
+  let results = fold_left (fun x y -> (f y)::x) [] xs
+  in
+  fold_left (fun x y -> y::x) [] results;;
+```
