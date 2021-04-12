@@ -28,4 +28,17 @@ similar2 (Rectangle (4, 4)) (Square (2));;
 ### 6.2
 
 ```
+type figure = Point
+  | Circle of int
+  | Rectangle of int * int
+  | Square of int;;
+
+type 'a with_location = {loc_x: float; loc_y: float; body: 'a};;
+
+let overlap_circle x1 y1 r1 x2 y2 r2 =
+    
+
+let overlap f1 f2 =
+  
+
 ```
