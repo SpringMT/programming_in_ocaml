@@ -74,6 +74,9 @@ and two = OneMoreThan (OneMoreThan Zero)
 and three = OneMoreThan (OneMoreThan (OneMoreThan Zero))
 ;;
 mul three two;;
+
+let monus m n =
+
 ```
 
 ```
