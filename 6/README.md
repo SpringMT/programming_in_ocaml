@@ -75,10 +75,42 @@ and three = OneMoreThan (OneMoreThan (OneMoreThan Zero))
 ;;
 mul three two;;
 
-let monus m n =
+let rec monus m n =
+  match (m, n) with
+  (Zero, _) -> Zero
+  | (_, Zero) -> m
+  | OneMoreThan a, OneMoreThan b -> monus a b
+  ;;
+monus three two;;
 
+let rec minus m n =
+  match (m, n) with
+  (Zero, _) -> None
+  | (_, Zero) -> Some m
+  | OneMoreThan a, OneMoreThan b -> minus a b
+  ;;
+  
+minus three two;;
 ```
 
+### 6.5
 ```
+type 'a tree =
+  Lf
+  | Br of 'a * 'a tree * 'a tree;;
+let rec comptree x n =
+  match n with
+  0 -> Lf
+  | _ -> Br(x, (comptree x (n-1)), (comptree x (n-1)))
+  ;;
 
+let comptree' n =
+  let rec comptree_i n' i =
+    match n' with
+    0 -> Lf
+    | _ -> Br(i, (comptree_i (n'-1) (2*i+1)), (comptree_i (n'-1) (2*i)))
+  in
+    comptree_i n 1
+  ;;
+comptree' 3;;
 ```
