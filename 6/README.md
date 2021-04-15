@@ -114,3 +114,105 @@ let comptree' n =
   ;;
 comptree' 3;;
 ```
+
+### 6.6
+```
+type 'a tree =
+  Lf
+  | Br of 'a * 'a tree * 'a tree
+  ;;
+
+let comptree' n =
+  let rec comptree_i n' i =
+    match n' with
+    0 -> Lf
+    | _ -> Br( i, (comptree_i (n'-1) (2*i)), (comptree_i (n'-1) (2*i+1)) )
+  in
+    comptree_i n 1
+  ;;
+let a = comptree' 3;;
+
+let rec preord t l =
+  match t with
+  Lf -> l
+  | Br(x, left, right) -> x :: (preord left (preord right l))
+  ;;
+
+preord a [];;
+
+let rec inord t l =
+  match t with
+  Lf -> l
+  | Br(x, left, right) -> inord left (x :: (inord right l))
+  ;;
+inord a [];;
+
+let rec postord t l =
+  match t with
+  Lf -> l
+  | Br(x, left, right) -> postord left (postord right (x::l))
+  ;;
+  
+postord a [];;
+```
+
+### 6.7
+```
+type 'a tree =
+  Lf
+  | Br of 'a * 'a tree * 'a tree
+  ;;
+
+let comptree' n =
+  let rec comptree_i n' i =
+    match n' with
+    0 -> Lf
+    | _ -> Br( i, (comptree_i (n'-1) (2*i)), (comptree_i (n'-1) (2*i+1)) )
+  in
+    comptree_i n 1
+  ;;
+let a = comptree' 3;;
+
+let rec reflect t =
+  match t with
+  Lf -> Lf
+  | Br(x, left, right) -> Br(x, reflect(right), reflect(left))
+  ;;
+reflect a;;
+```
+
+### 6.8
+```
+type 'a rosetree = RLf | RBr of 'a * 'a rosetree list;;
+type 'a tree =
+  Lf
+  | Br of 'a * 'a tree * 'a tree
+  ;;
+
+let rec tree_of_rtree =  function
+  RLf -> Br (None, Lf, Lf)
+  | RBr (a, rtrees) -> Br (Some a, tree_of_rtreelist rtrees, Lf)
+and tree_of_rtreelist = function
+  [] -> Lf
+  | rtree :: rest ->
+    let Br (a, left, Lf) = tree_of_rtree rtree
+  in Br (a, left, tree_of_rtreelist rest);;
+
+let rec rtree_of_tree =  function
+  Br(Some a, left, _) -> RBr(a, )
+  | Br(None, _, _) -> RLf
+  ;;
+
+
+let rtree = RBr ("a", [
+      RBr ("b", [
+        RBr ("c", [RLf]);
+        RLf;
+        RBr ("d", [RLf])]);
+      RBr ("e", [RLf]);
+      RBr ("f", [RLf])]);;
+
+rtree_of_tree (tree_of_rtree rtree);;
+
+```
+
