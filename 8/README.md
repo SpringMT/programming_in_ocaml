@@ -83,3 +83,35 @@ peek q;;
 take q;;
 ignore(take q); add 5 q; peek q;;
 ```
+
+### 8.10
+
+```
+let print_int n = 
+  output_string stdout (string_of_int n)
+  ;;
+```
+
+
+### 8.11
+
+```
+let display_file file =
+  let input = open_in file in
+  let line_num = ref 1 in
+  try
+    while true do
+      output_string stdout ((string_of_int !line_num) ^ " " ^ (input_line input) ^ "\n");
+      line_num := !line_num + 1;
+    done
+  with End_of_file -> ()
+  ;;
+```
+
+### 8.12
+
+```
+let cp src dst =
+;;
+```
+
