@@ -104,7 +104,8 @@ let display_file file =
       output_string stdout ((string_of_int !line_num) ^ " " ^ (input_line input) ^ "\n");
       line_num := !line_num + 1;
     done
-  with End_of_file -> ()
+  with End_of_file -> ();
+  close_in input
   ;;
 ```
 
@@ -112,6 +113,14 @@ let display_file file =
 
 ```
 let cp src dst =
+  let src_fd = open_in src and dst_fd = open_out dst in
+  try
+    while true do
+      output_string dst_fd ((input_line src_fd) ^ "\n");
+    done
+  with End_of_file -> ();
+  close_in src_fd;
+  close_out dst_fd;
 ;;
 ```
 
